@@ -1,0 +1,5 @@
+classes= 2
+train  = /home/white/Flea_beetle/Dataset_backup/train.txt
+valid  = /home/white/Flea_beetle/Dataset_backup/test.txt
+names = /home/white/Flea_beetle/Flea_beatle.names
+backup = /home/white/Flea_beetle
