@@ -28,7 +28,7 @@ print('[Status] Loading Model...')
 net = cv2.dnn.readNetFromDarknet(PROTOTXT, MODEL)
 # Get the ouput layer names
 layer_names = net.getLayerNames()
-layer_names = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
+layer_names = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
 def extract_boxes_confidences_classids(outputs, confidence, width, height):
     boxes = []
