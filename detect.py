@@ -6,10 +6,6 @@ import argparse
 import numpy as np
 import sys
 
-# ap = argparse.ArgumentParser()
-# ap.add_argument("-c", "--camera", required=True,
-# 	help="select camera")
-
 num = 0
 cap = cv2.VideoCapture(int(num))
 cap.set(cv2.CAP_PROP_AUTOFOCUS,1)
@@ -111,8 +107,28 @@ while True:
     thickness = -1
     # cv2.rectangle(image, start_point, end_point, color, thickness)
     # cv2.putText(img=image, text="camera:"+str(num), org=(5, 715), fontFace=cv2.FONT_HERSHEY_TRIPLEX, fontScale=1, color=(255, 255, 255),thickness=1)
+    
+    if save_pictures:
+        current_time = time.time()
+        if current_time - last_save_time >= save_interval:
+            # Save the current frame as an image
+            save_filename = f"capture_{int(current_time)}.jpg"
+            cv2.imwrite(save_filename, image)
+            print(f"[INFO] Image saved as {save_filename}")
+            last_save_time = current_time  # Reset the last save time
+            
     cv2.imshow("Detector",image)
 
-    if cv2.waitKey(1) == 27: 
+    key = cv2.waitKey(1) & 0xFF
+    if key == 27:  # ESC key to exit
         break
-        
+    elif key == ord('p'):  # 'P' key to toggle picture saving
+        save_pictures = not save_pictures  # Toggle the flag
+        if save_pictures:
+            print("[INFO] Picture saving enabled")
+        else:
+            print("[INFO] Picture saving disabled")
+    
+# Cleanup
+cap.release()
+cv2.destroyAllWindows()
